@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xandu's Lounge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-left">
+      <button class="nav-icon-btn" aria-label="Server icon">
+        <img src="images/logo.png" alt="Xandu's Lounge" class="nav-icon-img" onerror="this.style.display='none';this.parentElement.textContent='🍓'" />
+      </button>
+    </div>
+    <div class="nav-center">
+      <a href="#" class="nav-link" data-page="home">Home</a>
+      <a href="#" class="nav-link" data-page="gallery">Gallery</a>
+      <a href="#" class="nav-link" data-page="updates">Updates</a>
+      <a href="#" class="nav-link" data-page="projects">Projects</a>
+    </div>
+    <div class="nav-right">
+      <a href="https://discord.gg/52EE6N8bB2" class="btn-signup">Join Server</a>
+    </div>
+  </nav>
+
+
+  <section class="xandu" id="home-xandu">
+    <button class="xandu-arrow xandu-arrow-left" aria-label="Previous">&#8249;</button>
+
+    <div class="xandu-banner" id="xandu-banner">
+      <div class="xandu-logo-badge">
+        <span class="xandu-logo-text">
+          <img src="images/logo.png" alt="Xandu's Lounge" class="xandu-logo-img" onerror="this.style.display='none'" />
+        </span>
+      </div>
+
+      <div class="xandu-content">
+        <h1 class="xandu-title">Xandu</h1>
+        <p class="xandu-description">
+          We're a fan-made Discord community created to bring XanduIsBored fans together.
+          Whether you're here for VTubers, Vocaloid, games, anime, art, or simply to meet
+          new people — we'd love to have you!
+        </p>
+        <a href="https://discord.gg/52EE6N8bB2" class="btn-readmore">Join Now</a>
+      </div>
+
+      <div class="xandu-dots">
+        <span class="dot dot-active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+    <button class="xandu-arrow xandu-arrow-right" aria-label="Next">&#8250;</button>
+  </section>
+
+
+  <section class="bottom-section" id="home-bottom">
+
+    <div class="col-gallery">
+      <h2 class="col-title">Gallery <span class="col-arrow">&#8250;</span></h2>
+      <div class="gallery-grid" id="gallery-grid"></div>
+      <button class="btn-viewmore" id="view-more-btn">View More</button>
+    </div>
+
+
+    <div class="col-updates" id="updates-col">
+      <div class="col-updates-header">
+        <h2 class="col-title">Latest Updates</h2>
+      </div>
+      <div id="home-posts-feed">
+        <div class="no-posts-msg">Loading updates… 🍓</div>
+      </div>
+    </div>
+
+
+    <div class="col-cards">
+      <div class="community-card">
+        <div class="community-card-top">
+          <div class="community-badge">🌸 Xandu's Lounge</div>
+          <p class="community-card-tagline">A fan-made community where XanduIsBored fans can relax, chat, and make friends!</p>
+        </div>
+        <p class="community-card-desc">
+          From VTubers to Vocaloid, games to anime — this is a space built
+          with love for XanduIsBored fans everywhere.
+        </p>
+        <div class="community-tags">
+          <span class="tag">🎭 VTubers</span>
+          <span class="tag">🎵 Vocaloid</span>
+          <span class="tag">🎮 Games</span>
+          <span class="tag">🌸 Anime</span>
+          <span class="tag">🎨 Art</span>
+        </div>
+        <a href="https://discord.gg/52EE6N8bB2" class="community-join-btn">Join the Lounge ↗</a>
+      </div>
+    </div>
+
+  </section>
+
+
+  <footer class="footer" id="home-footer">
+    <p>
+      🍓 Xandu's Lounge &mdash;
+      <a href="https://discord.gg/52EE6N8bB2" class="footer-link">Join our Discord</a>
+    </p>
+    <p class="footer-credit">Website by @knnazkiren</p>
+  </footer>
+
+
+  <!-- INNER PAGES -->
+  <div class="inner-page-wrap" id="gallery-page">
+    <button class="back-btn" onclick="showHome()">&#8592; Back to Home</button>
+    <h2 class="page-title">🎨 Gallery</h2>
+    <div class="full-gallery-grid" id="full-gallery-container">
+      <div class="gallery-loading">Loading gallery…</div>
+    </div>
+  </div>
+
+  <div class="inner-page-wrap" id="cat-page-0">
+    <button class="back-btn" onclick="showHome()">&#8592; Back to Home</button>
+    <div class="cat-page-header">
+      <span class="cat-page-icon" id="page-icon-0">📢</span>
+      <h2 class="page-title" id="page-title-0">Announcements</h2>
+    </div>
+    <div class="posts-feed" id="posts-feed-0">
+      <div class="no-posts-msg">No posts yet — check back soon! 🍓</div>
+    </div>
+  </div>
+
+  <div class="inner-page-wrap" id="cat-page-1">
+    <button class="back-btn" onclick="showHome()">&#8592; Back to Home</button>
+    <div class="cat-page-header">
+      <span class="cat-page-icon" id="page-icon-1">🍓</span>
+      <h2 class="page-title" id="page-title-1">Strawberry Posts</h2>
+    </div>
+    <div class="posts-feed" id="posts-feed-1">
+      <div class="no-posts-msg">No posts yet — check back soon! 🍓</div>
+    </div>
+  </div>
+
+  <div class="inner-page-wrap" id="cat-page-2">
+    <button class="back-btn" onclick="showHome()">&#8592; Back to Home</button>
+    <div class="cat-page-header">
+      <span class="cat-page-icon" id="page-icon-2">🌟</span>
+      <h2 class="page-title" id="page-title-2">Member Highlights</h2>
+    </div>
+    <div class="posts-feed" id="posts-feed-2">
+      <div class="no-posts-msg">No posts yet — check back soon! 🍓</div>
+    </div>
+  </div>
+
+  <div class="inner-page-wrap" id="projects-page">
+    <button class="back-btn" onclick="showHome()">&#8592; Back to Home</button>
+    <h2 class="page-title">🚀 Projects</h2>
+    <div class="projects-grid" id="projects-grid">
+      <div class="projects-empty"><span>🚀</span>No projects yet — stay tuned!</div>
+    </div>
+  </div>
+
+
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+  <script>
+
+    /* ---- SUPABASE ---- */
+    var SUPABASE_URL = 'https://gdhjtefkcrpxkrdiykhn.supabase.co';
+    var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkaGp0ZWZrY3JweGtyZGl5a2huIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMzMTY5MTIsImV4cCI6MjA5ODg5MjkxMn0.fy1BvtEDOEY_kbJI5o6ML6H_A-zJVKZPCkd5SEwlc9g';
+    var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+
+    /* ---- PAGE ROUTING ---- */
+    var homeEls   = ['home-xandu', 'home-bottom', 'home-footer'];
+    var innerPages = ['gallery-page', 'cat-page-0', 'cat-page-1', 'cat-page-2', 'projects-page'];
+
+    function showHome() {
+      homeEls.forEach(function(id) { var el = document.getElementById(id); if (el) el.style.display = ''; });
+      innerPages.forEach(function(id) { var el = document.getElementById(id); if (el) el.style.display = 'none'; });
+      setActiveNav('home');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showPage(pageId, navKey) {
+      homeEls.forEach(function(id) { var el = document.getElementById(id); if (el) el.style.display = 'none'; });
+      innerPages.forEach(function(id) { var el = document.getElementById(id); if (el) el.style.display = 'none'; });
+      var pg = document.getElementById(pageId);
+      if (pg) pg.style.display = 'block';
+      setActiveNav(navKey || '');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setActiveNav(key) {
+      document.querySelectorAll('.nav-link').forEach(function(l) {
+        l.classList.toggle('active', l.getAttribute('data-page') === key);
+      });
+    }
+
+    document.querySelectorAll('.nav-link').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var pg = link.getAttribute('data-page');
+        if (pg === 'home') {
+          showHome();
+        } else if (pg === 'gallery') {
+          buildFullGallery();
+          showPage('gallery-page', 'gallery');
+        } else if (pg === 'updates') {
+          showHome();
+          setTimeout(function() {
+            var el = document.getElementById('updates-col');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 80);
+        } else if (pg === 'projects') {
+          buildProjectsPage();
+          showPage('projects-page', 'projects');
+        }
+      });
+    });
+
+
+    /* ---- POSTS — load from Supabase ---- */
+    async function loadPosts() {
+      var homeFeed = document.getElementById('home-posts-feed');
+
+      // Fetch categories and posts in parallel
+      var catsRes  = await sb.from('categories').select('*').order('id');
+      var postsRes = await sb.from('posts').select('*').order('date', { ascending: false });
+
+      var cats  = (catsRes.data  || []);
+      var posts = (postsRes.data || []);
+
+      // Apply category labels and icons to inner pages
+      cats.forEach(function(cat) {
+        var pageIcon  = document.getElementById('page-icon-'  + cat.id);
+        var pageTitle = document.getElementById('page-title-' + cat.id);
+        if (pageIcon  && cat.icon)      pageIcon.textContent  = cat.icon;
+        if (pageTitle && cat.cat_title) pageTitle.textContent = cat.cat_title;
+      });
+
+      // Group posts by category
+      var byCategory = { 0: [], 1: [], 2: [] };
+      posts.forEach(function(p) {
+        if (p.cat_index >= 0 && p.cat_index <= 2) byCategory[p.cat_index].push(p);
+      });
+
+      // Render individual category feeds
+      for (var i = 0; i <= 2; i++) {
+        var cat = cats.find(function(c) { return c.id === i; });
+        if (cat && cat.visible === false) { renderFeed(i, []); continue; }
+        renderFeed(i, byCategory[i]);
+      }
+
+      // Build merged home feed (all visible categories combined, sorted by date desc)
+      var allPosts = [];
+      cats.forEach(function(cat) {
+        if (cat.visible === false) return;
+        (byCategory[cat.id] || []).forEach(function(p) {
+          allPosts.push({ post: p, catIndex: cat.id, catIcon: cat.icon || '📢', catTitle: cat.cat_title || 'Updates' });
+        });
+      });
+
+      if (!homeFeed) return;
+
+      if (allPosts.length === 0) {
+        homeFeed.innerHTML = '<div class="no-posts-msg">No updates yet — check back soon! 🍓</div>';
+        return;
+      }
+
+      allPosts.sort(function(a, b) {
+        return new Date(b.post.date + 'T12:00:00') - new Date(a.post.date + 'T12:00:00');
+      });
+
+      homeFeed.innerHTML = '';
+      allPosts.forEach(function(item) {
+        var post = item.post;
+        var card = document.createElement('a');
+        card.className = 'home-post-item';
+        card.href = '#';
+        card.addEventListener('click', function(e) {
+          e.preventDefault();
+          showPage('cat-page-' + item.catIndex);
+        });
+
+        var iconEl = document.createElement('span');
+        iconEl.className = 'home-post-icon';
+        iconEl.textContent = item.catIcon;
+
+        var content = document.createElement('div');
+        content.className = 'home-post-content';
+
+        var catLabel = document.createElement('div');
+        catLabel.className = 'home-post-cat';
+        catLabel.textContent = item.catTitle;
+
+        var titleEl = document.createElement('div');
+        titleEl.className = 'home-post-title';
+        titleEl.textContent = post.title || '';
+
+        var meta = document.createElement('div');
+        meta.className = 'home-post-meta';
+        meta.textContent = fmtDate(post.date);
+
+        if (post.body) {
+          var preview = document.createElement('div');
+          preview.className = 'home-post-preview';
+          preview.textContent = post.body;
+          content.appendChild(catLabel);
+          content.appendChild(titleEl);
+          content.appendChild(preview);
+          content.appendChild(meta);
+        } else {
+          content.appendChild(catLabel);
+          content.appendChild(titleEl);
+          content.appendChild(meta);
+        }
+
+        card.appendChild(iconEl);
+        card.appendChild(content);
+        homeFeed.appendChild(card);
+      });
+    }
+
+    function renderFeed(catIndex, posts) {
+      var feedEl = document.getElementById('posts-feed-' + catIndex);
+      if (!feedEl) return;
+      if (!posts || posts.length === 0) {
+        feedEl.innerHTML = '<div class="no-posts-msg">No posts yet — check back soon! 🍓</div>';
+        return;
+      }
+      feedEl.innerHTML = '';
+      posts.forEach(function(post) {
+        var card = document.createElement('div');
+        card.className = 'post-card';
+
+        var dateEl = document.createElement('div');
+        dateEl.className = 'post-date';
+        dateEl.textContent = fmtDate(post.date);
+
+        var titleEl = document.createElement('h3');
+        titleEl.className = 'post-title';
+        titleEl.textContent = post.title || '';
+
+        var bodyEl = document.createElement('p');
+        bodyEl.className = 'post-body';
+        bodyEl.textContent = post.body || '';
+
+        card.appendChild(dateEl);
+        card.appendChild(titleEl);
+        card.appendChild(bodyEl);
+
+        if (post.discord_link && post.discord_link.trim() !== '') {
+          var btn = document.createElement('a');
+          btn.className = 'post-discord-btn';
+          btn.href = post.discord_link.trim();
+          btn.target = '_blank';
+          btn.rel = 'noopener noreferrer';
+          btn.textContent = (post.discord_btn && post.discord_btn.trim() ? post.discord_btn.trim() : 'Go to Channel') + ' ↗';
+          card.appendChild(btn);
+        }
+        feedEl.appendChild(card);
+      });
+    }
+
+    function fmtDate(s) {
+      if (!s) return '';
+      try { return new Date(s + 'T12:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); }
+      catch(e) { return s; }
+    }
+
+
+    /* ---- GALLERY — load from Supabase Storage ---- */
+    var galleryItems = [];
+
+    async function loadHomeGallery() {
+      var res = await sb.from('gallery_items').select('*').order('created_at', { ascending: false });
+      galleryItems = res.data || [];
+      if (galleryItems.length === 0) return;
+
+      var grid    = document.getElementById('gallery-grid');
+      var viewBtn = document.getElementById('view-more-btn');
+      var col     = document.querySelector('.col-gallery');
+      var firstImgLoadPromise = null;
+
+      galleryItems.forEach(function(item, idx) {
+        var thumb = buildThumb(item.url, item.credit, item.mime_type, idx >= 2);
+        if (idx < 2) {
+          grid.appendChild(thumb);
+        } else {
+          col.insertBefore(thumb, viewBtn);
+        }
+        // Track first image load so slider fires only after it's ready
+        if (!firstImgLoadPromise) {
+          var imgEl = thumb.querySelector('img');
+          if (imgEl) {
+            firstImgLoadPromise = new Promise(function(resolve) {
+              if (imgEl.complete) { resolve(); }
+              else { imgEl.addEventListener('load', resolve); imgEl.addEventListener('error', resolve); }
+            });
+          }
+        }
+      });
+
+      // Wait for first gallery image before updating the banner slider
+      if (firstImgLoadPromise) await firstImgLoadPromise;
+      refreshSlider();
+    }
+
+    function buildThumb(src, credit, mimeType, hidden) {
+      var div = document.createElement('div');
+      div.className = 'gallery-thumb' + (hidden ? ' hidden-thumb' : '');
+      if (src) {
+        var isVid = mimeType && mimeType.indexOf('video') === 0;
+        if (isVid) {
+          var v = document.createElement('video');
+          v.src = src; v.muted = true; v.controls = false;
+          div.appendChild(v);
+        } else {
+          var img = document.createElement('img');
+          img.src = src; img.alt = credit || 'Gallery image';
+          div.appendChild(img);
+        }
+      }
+      if (credit) {
+        var p = document.createElement('p');
+        p.className = 'gallery-credit';
+        p.textContent = credit;
+        div.appendChild(p);
+      }
+      return div;
+    }
+
+    async function buildFullGallery() {
+      var container = document.getElementById('full-gallery-container');
+      container.innerHTML = '<div class="gallery-loading">Loading gallery…</div>';
+
+      var res = await sb.from('gallery_items').select('*').order('created_at', { ascending: false });
+      var items = res.data || [];
+
+      if (items.length === 0) {
+        container.innerHTML = '<div class="gallery-loading">No gallery items yet — check back soon! 🍓</div>';
+        return;
+      }
+
+      container.innerHTML = '';
+      items.forEach(function(item) {
+        container.appendChild(buildThumb(item.url, item.credit, item.mime_type, false));
+      });
+    }
+
+
+    /* ---- PROJECTS — load from Supabase ---- */
+    async function buildProjectsPage() {
+      var grid = document.getElementById('projects-grid');
+      grid.innerHTML = '<div class="projects-empty"><span>⏳</span>Loading projects…</div>';
+
+      var res = await sb.from('projects').select('*').order('created_at', { ascending: false });
+      var projects = res.data || [];
+
+      if (projects.length === 0) {
+        grid.innerHTML = '<div class="projects-empty"><span>🚀</span>No projects yet — stay tuned!</div>';
+        return;
+      }
+
+      grid.innerHTML = '';
+      projects.forEach(function(proj) {
+        var card = document.createElement('div');
+        card.className = 'project-card';
+
+        if (proj.image_url) {
+          var img = document.createElement('img');
+          img.className = 'project-thumb';
+          img.src = proj.image_url;
+          img.alt = proj.title || 'Project image';
+          card.appendChild(img);
+        } else {
+          var ph = document.createElement('div');
+          ph.className = 'project-thumb-placeholder';
+          ph.textContent = proj.emoji || '🚀';
+          card.appendChild(ph);
+        }
+
+        var body = document.createElement('div');
+        body.className = 'project-body';
+
+        var header = document.createElement('div');
+        header.className = 'project-header';
+
+        var titleEl = document.createElement('div');
+        titleEl.className = 'project-title';
+        titleEl.textContent = proj.title || '';
+
+        var statusMap = { 'Planning': 'status-planning', 'In Progress': 'status-inprogress', 'Completed': 'status-completed', 'On Hold': 'status-onhold' };
+        var badge = document.createElement('span');
+        badge.className = 'project-status ' + (statusMap[proj.status] || 'status-planning');
+        badge.textContent = proj.status || 'Planning';
+
+        header.appendChild(titleEl);
+        header.appendChild(badge);
+        body.appendChild(header);
+
+        if (proj.description) {
+          var desc = document.createElement('p');
+          desc.className = 'project-desc';
+          desc.textContent = proj.description;
+          body.appendChild(desc);
+        }
+
+        if (proj.tags && proj.tags.trim()) {
+          var tagsRow = document.createElement('div');
+          tagsRow.className = 'project-tags';
+          proj.tags.split(',').forEach(function(t) {
+            t = t.trim();
+            if (!t) return;
+            var span = document.createElement('span');
+            span.className = 'tag';
+            span.textContent = t;
+            tagsRow.appendChild(span);
+          });
+          body.appendChild(tagsRow);
+        }
+
+        if (proj.link && proj.link.trim()) {
+          var linkEl = document.createElement('a');
+          linkEl.className = 'project-link-btn';
+          linkEl.href = proj.link.trim();
+          linkEl.target = '_blank';
+          linkEl.rel = 'noopener noreferrer';
+          linkEl.textContent = 'Learn More ↗';
+          body.appendChild(linkEl);
+        }
+
+        card.appendChild(body);
+        grid.appendChild(card);
+      });
+    }
+
+
+    /* ---- XANDU SLIDER ---- */
+    var sliderImgs  = [];
+    var slideIndex  = 0;
+    var sliderTimer = null;
+
+    function refreshSlider() {
+      sliderImgs = Array.from(document.querySelectorAll('.col-gallery .gallery-thumb img'));
+      if (sliderImgs.length) showSlide(0);
+    }
+
+    function showSlide(n) {
+      if (!sliderImgs.length) return;
+      slideIndex = ((n % sliderImgs.length) + sliderImgs.length) % sliderImgs.length;
+      var banner = document.getElementById('xandu-banner');
+      if (!banner) return;
+      var src = sliderImgs[slideIndex].src;
+      banner.style.backgroundImage =
+        'linear-gradient(105deg, rgba(100,30,25,0.65) 0%, rgba(201,107,98,0.40) 45%, rgba(201,107,98,0.08) 70%, transparent 100%), url("' + src + '")';
+      banner.style.backgroundSize = 'cover';
+      banner.style.backgroundPosition = 'center top';
+      var dots = document.querySelectorAll('.dot');
+      dots.forEach(function(d, i) { d.classList.toggle('dot-active', i === slideIndex % dots.length); });
+    }
+
+    function startSlider() {
+      sliderImgs = Array.from(document.querySelectorAll('.col-gallery .gallery-thumb img'));
+      if (sliderImgs.length) showSlide(0);
+      clearInterval(sliderTimer);
+      sliderTimer = setInterval(function() { showSlide(slideIndex + 1); }, 4000);
+    }
+
+    var leftArr  = document.querySelector('.xandu-arrow-left');
+    var rightArr = document.querySelector('.xandu-arrow-right');
+    if (leftArr)  leftArr.addEventListener('click',  function() { showSlide(slideIndex - 1); });
+    if (rightArr) rightArr.addEventListener('click', function() { showSlide(slideIndex + 1); });
+
+    var xanduBanner = document.getElementById('xandu-banner');
+    if (xanduBanner) {
+      xanduBanner.addEventListener('mouseenter', function() { clearInterval(sliderTimer); });
+      xanduBanner.addEventListener('mouseleave', function() {
+        clearInterval(sliderTimer);
+        sliderTimer = setInterval(function() { showSlide(slideIndex + 1); }, 4000);
+      });
+    }
+
+
+    /* ---- VIEW MORE ---- */
+    var viewMoreBtn = document.getElementById('view-more-btn');
+    if (viewMoreBtn) {
+      viewMoreBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var expanded = viewMoreBtn.getAttribute('data-expanded') === 'true';
+        document.querySelectorAll('.col-gallery .gallery-thumb.hidden-thumb').forEach(function(t) {
+          t.style.display = expanded ? '' : 'block';
+        });
+        viewMoreBtn.textContent = expanded ? 'View More' : 'View Less';
+        viewMoreBtn.setAttribute('data-expanded', expanded ? 'false' : 'true');
+      });
+    }
+
+
+    /* ---- INIT ---- */
+    loadPosts();
+    loadHomeGallery().then(function() { setTimeout(startSlider, 200); });
+
+  </script>
+
+</body>
+</html>

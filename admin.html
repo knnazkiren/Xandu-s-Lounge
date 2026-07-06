@@ -1,0 +1,2233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin — Xandu's Lounge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --red-deep: #9b3a32;
+        --red-main: #c96b62;
+        --red-bright: #e08880;
+        --red-soft: #f0b8b3;
+        --bg-page: #fdf6f5;
+        --bg-card: #ffffff;
+        --text-dark: #3d1c18;
+        --text-mid: #8c5550;
+        --border: #f0d4d0;
+        --shadow: rgba(180, 90, 80, 0.12);
+      }
+
+      body {
+        font-family: "Nunito", sans-serif;
+        background: var(--bg-page);
+        color: var(--text-dark);
+        min-height: 100vh;
+      }
+
+      /* LOGIN */
+      #login-screen {
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          #f7e8e6 0%,
+          #fdf6f5 60%,
+          #fce8e6 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+      }
+      .login-card {
+        background: var(--bg-card);
+        border: 1.5px solid var(--border);
+        border-radius: 28px;
+        padding: 52px 52px 44px;
+        box-shadow: 0 8px 40px rgba(180, 90, 80, 0.14);
+        text-align: center;
+        width: 100%;
+        max-width: 400px;
+      }
+      .login-icon {
+        font-size: 52px;
+        display: block;
+        margin-bottom: 18px;
+      }
+      .login-card h1 {
+        font-family: "Fredoka One", cursive;
+        font-size: 30px;
+        color: var(--text-dark);
+        margin-bottom: 6px;
+      }
+      .login-sub {
+        font-size: 14px;
+        color: var(--text-mid);
+        margin-bottom: 32px;
+      }
+      .login-card input[type="password"] {
+        width: 100%;
+        padding: 14px 20px;
+        border: 1.5px solid var(--border);
+        border-radius: 14px;
+        font-family: "Nunito", sans-serif;
+        font-size: 16px;
+        color: var(--text-dark);
+        background: var(--bg-page);
+        outline: none;
+        margin-bottom: 16px;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .login-card input[type="password"]:focus {
+        border-color: var(--red-main);
+        box-shadow: 0 0 0 3px rgba(201, 107, 98, 0.14);
+      }
+      .login-card .btn-enter {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 999px;
+        background: var(--red-main);
+        color: #fff;
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 15px;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+      }
+      .login-card .btn-enter:hover {
+        background: var(--red-deep);
+        transform: scale(1.02);
+      }
+      .login-error {
+        margin-top: 14px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--red-main);
+        display: none;
+      }
+
+      /* ADMIN SHELL */
+      #admin-panel {
+        display: none;
+      }
+      .admin-topbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(253, 246, 245, 0.95);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 1px 8px var(--shadow);
+        padding: 16px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .topbar-title {
+        font-family: "Fredoka One", cursive;
+        font-size: 22px;
+        color: var(--text-dark);
+      }
+      .topbar-title span {
+        color: var(--red-main);
+      }
+      .btn-viewsite {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 10px 22px;
+        border-radius: 999px;
+        border: 1.5px solid var(--border);
+        background: var(--bg-card);
+        color: var(--text-mid);
+        font-family: "Nunito", sans-serif;
+        font-weight: 700;
+        font-size: 13px;
+        text-decoration: none;
+        transition:
+          background 0.2s,
+          color 0.2s,
+          border-color 0.2s;
+      }
+      .btn-viewsite:hover {
+        background: var(--red-main);
+        color: #fff;
+        border-color: var(--red-main);
+      }
+
+      /* TABS */
+      .admin-body {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 36px 24px 100px;
+      }
+      .tab-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+      }
+      .tab-btn {
+        padding: 10px 22px;
+        border-radius: 999px;
+        border: 1.5px solid var(--border);
+        background: var(--bg-card);
+        color: var(--text-mid);
+        font-family: "Nunito", sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          color 0.2s,
+          border-color 0.2s,
+          transform 0.15s;
+      }
+      .tab-btn:hover {
+        border-color: var(--red-bright);
+        color: var(--red-main);
+      }
+      .tab-btn.active {
+        background: var(--red-main);
+        color: #fff;
+        border-color: var(--red-main);
+      }
+
+      /* PANELS */
+      .cat-panel {
+        display: none;
+      }
+      .cat-panel.active {
+        display: block;
+      }
+
+      /* CATEGORY SETTINGS */
+      .cat-settings {
+        background: var(--bg-card);
+        border: 1.5px solid var(--border);
+        border-radius: 18px;
+        padding: 22px 24px;
+        box-shadow: 0 2px 10px var(--shadow);
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .settings-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .settings-label {
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--text-mid);
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+      }
+      .settings-group input[type="text"] {
+        padding: 9px 14px;
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        font-family: "Nunito", sans-serif;
+        font-size: 14px;
+        color: var(--text-dark);
+        background: var(--bg-page);
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .settings-group input[type="text"]:focus {
+        border-color: var(--red-main);
+      }
+      .settings-group input.icon-input {
+        width: 70px;
+        text-align: center;
+        font-size: 20px;
+      }
+      .settings-group input.title-input {
+        width: 220px;
+      }
+
+      /* TOGGLE */
+      .toggle-wrap {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text-mid);
+        margin-left: auto;
+      }
+      .toggle {
+        position: relative;
+        width: 44px;
+        height: 24px;
+        flex-shrink: 0;
+      }
+      .toggle input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .toggle-slider {
+        position: absolute;
+        inset: 0;
+        background: var(--border);
+        border-radius: 999px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .toggle-slider::before {
+        content: "";
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #fff;
+        top: 3px;
+        left: 3px;
+        transition: transform 0.2s;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+      }
+      .toggle input:checked + .toggle-slider {
+        background: var(--red-main);
+      }
+      .toggle input:checked + .toggle-slider::before {
+        transform: translateX(20px);
+      }
+      .btn-save-settings {
+        padding: 10px 22px;
+        border-radius: 999px;
+        border: 1.5px solid var(--border);
+        background: var(--bg-page);
+        color: var(--text-mid);
+        font-family: "Nunito", sans-serif;
+        font-weight: 700;
+        font-size: 13px;
+        cursor: pointer;
+        margin-left: auto;
+        transition:
+          background 0.2s,
+          color 0.2s,
+          border-color 0.2s;
+      }
+      .btn-save-settings:hover {
+        background: var(--red-main);
+        color: #fff;
+        border-color: var(--red-main);
+      }
+
+      /* NEW POST BUTTON */
+      .new-post-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 18px 24px;
+        border: 2px dashed var(--border);
+        border-radius: 18px;
+        background: var(--bg-card);
+        color: var(--red-main);
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 15px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        justify-content: center;
+        transition:
+          border-color 0.2s,
+          background 0.2s,
+          transform 0.15s;
+      }
+      .new-post-btn:hover {
+        border-color: var(--red-main);
+        background: #fff5f4;
+        transform: scale(1.01);
+      }
+      .new-post-btn .plus {
+        font-size: 22px;
+        line-height: 1;
+      }
+
+      /* POST FORM */
+      .post-form {
+        background: var(--bg-card);
+        border: 1.5px solid var(--red-soft);
+        border-radius: 20px;
+        padding: 28px 28px 22px;
+        box-shadow: 0 4px 18px rgba(201, 107, 98, 0.1);
+        margin-bottom: 24px;
+        display: none;
+      }
+      .post-form.open {
+        display: block;
+      }
+      .form-title {
+        font-family: "Fredoka One", cursive;
+        font-size: 18px;
+        color: var(--text-dark);
+        margin-bottom: 20px;
+      }
+      .form-field {
+        margin-bottom: 16px;
+      }
+      .form-field label {
+        display: block;
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--text-mid);
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        margin-bottom: 7px;
+      }
+      .form-field input[type="text"],
+      .form-field input[type="url"],
+      .form-field input[type="date"],
+      .form-field select,
+      .form-field textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        font-family: "Nunito", sans-serif;
+        font-size: 14px;
+        color: var(--text-dark);
+        background: var(--bg-page);
+        outline: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+        resize: vertical;
+      }
+      .form-field textarea {
+        min-height: 130px;
+        line-height: 1.65;
+      }
+      .form-field input:focus,
+      .form-field select:focus,
+      .form-field textarea:focus {
+        border-color: var(--red-main);
+        box-shadow: 0 0 0 3px rgba(201, 107, 98, 0.12);
+        background: #fff;
+      }
+      .form-field .hint {
+        font-size: 11px;
+        color: var(--text-mid);
+        margin-top: 5px;
+      }
+      .discord-extra {
+        display: none;
+        margin-top: 16px;
+      }
+      .discord-extra.visible {
+        display: block;
+      }
+      .form-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 22px;
+      }
+      .btn-post-save {
+        flex: 1;
+        padding: 13px;
+        border: none;
+        border-radius: 999px;
+        background: var(--red-main);
+        color: #fff;
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 14px;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+      }
+      .btn-post-save:hover {
+        background: var(--red-deep);
+        transform: scale(1.02);
+      }
+      .btn-post-cancel {
+        padding: 13px 24px;
+        border: 1.5px solid var(--border);
+        border-radius: 999px;
+        background: var(--bg-card);
+        color: var(--text-mid);
+        font-family: "Nunito", sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .btn-post-cancel:hover {
+        background: var(--bg-page);
+        color: var(--text-dark);
+      }
+
+      /* ADMIN POST LIST */
+      .posts-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .admin-post-card {
+        background: var(--bg-card);
+        border: 1.5px solid var(--border);
+        border-radius: 16px;
+        padding: 20px 22px;
+        box-shadow: 0 2px 8px var(--shadow);
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+      }
+      .admin-post-body {
+        flex: 1;
+        min-width: 0;
+      }
+      .admin-post-date {
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--red-soft);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 5px;
+      }
+      .admin-post-title {
+        font-family: "Fredoka One", cursive;
+        font-size: 17px;
+        color: var(--text-dark);
+        margin-bottom: 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .admin-post-preview {
+        font-size: 13px;
+        color: var(--text-mid);
+        line-height: 1.5;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+      .admin-post-discord {
+        margin-top: 8px;
+        font-size: 12px;
+        color: var(--red-main);
+        font-weight: 700;
+      }
+      .admin-post-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      .btn-edit,
+      .btn-delete {
+        padding: 7px 16px;
+        border-radius: 999px;
+        font-family: "Nunito", sans-serif;
+        font-weight: 700;
+        font-size: 12px;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          color 0.2s,
+          transform 0.15s;
+        white-space: nowrap;
+      }
+      .btn-edit {
+        border: 1.5px solid var(--border);
+        background: var(--bg-page);
+        color: var(--text-mid);
+      }
+      .btn-edit:hover {
+        border-color: var(--red-main);
+        color: var(--red-main);
+        background: #fff5f4;
+      }
+      .btn-delete {
+        border: 1.5px solid #ffd0d0;
+        background: #fff5f5;
+        color: #c96b62;
+      }
+      .btn-delete:hover {
+        background: var(--red-main);
+        color: #fff;
+        border-color: var(--red-main);
+        transform: scale(1.03);
+      }
+      .no-posts-msg {
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--text-mid);
+        font-size: 14px;
+        border: 1.5px dashed var(--border);
+        border-radius: 16px;
+        background: var(--bg-card);
+      }
+      .no-posts-msg span {
+        display: block;
+        font-size: 32px;
+        margin-bottom: 10px;
+      }
+
+      /* GALLERY ADMIN */
+      .gallery-admin-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .gallery-admin-card {
+        background: var(--bg-card);
+        border: 1.5px solid var(--border);
+        border-radius: 16px;
+        padding: 16px 18px;
+        box-shadow: 0 2px 8px var(--shadow);
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+      .gallery-admin-preview {
+        flex-shrink: 0;
+        width: 80px;
+        height: 60px;
+        border-radius: 10px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #ffe4e4, #ffd0d0);
+        border: 1.5px solid var(--border);
+      }
+      .gallery-admin-preview img,
+      .gallery-admin-preview video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .gallery-admin-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .gallery-admin-credit {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text-dark);
+      }
+      .gallery-admin-type {
+        display: inline-block;
+        margin-top: 4px;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--red-main);
+      }
+
+      /* GALLERY UPLOAD FORM */
+      .gallery-form {
+        background: var(--bg-card);
+        border: 1.5px solid var(--red-soft);
+        border-radius: 20px;
+        padding: 28px 28px 22px;
+        box-shadow: 0 4px 18px rgba(201, 107, 98, 0.1);
+        margin-bottom: 24px;
+        display: none;
+      }
+      .gallery-form.open {
+        display: block;
+      }
+
+      /* DROP ZONE */
+      .drop-zone {
+        border: 2px dashed var(--red-soft);
+        border-radius: 16px;
+        background: #fff8f7;
+        padding: 40px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+        position: relative;
+        margin-bottom: 16px;
+      }
+      .drop-zone:hover,
+      .drop-zone.drag-over {
+        border-color: var(--red-main);
+        background: #fff0ef;
+      }
+      .drop-zone input[type="file"] {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+      }
+      .drop-zone-icon {
+        font-size: 36px;
+        margin-bottom: 10px;
+        display: block;
+      }
+      .drop-zone-text {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text-mid);
+      }
+      .drop-zone-sub {
+        font-size: 12px;
+        color: var(--red-soft);
+        margin-top: 4px;
+      }
+
+      /* FILE QUEUE */
+      .file-queue {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+      .file-queue-item {
+        background: var(--bg-page);
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .file-queue-preview {
+        width: 52px;
+        height: 40px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        flex-shrink: 0;
+        background: #ffe4e4;
+      }
+      .file-queue-preview img,
+      .file-queue-preview video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .file-queue-name {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--text-dark);
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .file-queue-remove {
+        background: none;
+        border: none;
+        color: var(--red-main);
+        font-size: 18px;
+        cursor: pointer;
+        padding: 0 4px;
+        flex-shrink: 0;
+        line-height: 1;
+      }
+
+      /* PROJECT ADMIN */
+      .projects-admin-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .admin-project-card {
+        background: var(--bg-card);
+        border: 1.5px solid var(--border);
+        border-radius: 16px;
+        padding: 18px 22px;
+        box-shadow: 0 2px 8px var(--shadow);
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+      .admin-project-thumb {
+        flex-shrink: 0;
+        width: 72px;
+        height: 56px;
+        border-radius: 10px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #ffe4e4, #ffd0d0);
+        border: 1.5px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+      }
+      .admin-project-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .admin-project-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .admin-project-title {
+        font-family: "Fredoka One", cursive;
+        font-size: 16px;
+        color: var(--text-dark);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 4px;
+      }
+      .admin-project-meta {
+        font-size: 12px;
+        color: var(--text-mid);
+      }
+
+      .project-form {
+        background: var(--bg-card);
+        border: 1.5px solid var(--red-soft);
+        border-radius: 20px;
+        padding: 28px 28px 22px;
+        box-shadow: 0 4px 18px rgba(201, 107, 98, 0.1);
+        margin-bottom: 24px;
+        display: none;
+      }
+      .project-form.open {
+        display: block;
+      }
+
+      .img-upload-zone {
+        border: 2px dashed var(--red-soft);
+        border-radius: 14px;
+        background: #fff8f7;
+        padding: 24px 16px;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+        position: relative;
+        margin-bottom: 8px;
+      }
+      .img-upload-zone:hover {
+        border-color: var(--red-main);
+        background: #fff0ef;
+      }
+      .img-upload-zone input[type="file"] {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+      }
+      .img-preview-wrap {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 8px;
+      }
+      .img-preview {
+        width: 160px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1.5px solid var(--border);
+        display: block;
+      }
+      .img-remove-btn {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--red-main);
+        color: #fff;
+        border: none;
+        font-size: 13px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+      }
+
+      /* STATUS BADGES */
+      .status-badge {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .status-planning {
+        background: #ede8ff;
+        color: #5040c8;
+      }
+      .status-inprogress {
+        background: #fff3d0;
+        color: #9a6200;
+      }
+      .status-completed {
+        background: #d4f5e9;
+        color: #1a7a50;
+      }
+      .status-onhold {
+        background: #f0f0f0;
+        color: #666;
+      }
+
+      /* TOAST */
+      .toast {
+        position: fixed;
+        bottom: 32px;
+        left: 50%;
+        transform: translateX(-50%) translateY(80px);
+        background: var(--text-dark);
+        color: #fff;
+        font-family: "Nunito", sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        padding: 14px 32px;
+        border-radius: 999px;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+        opacity: 0;
+        transition:
+          opacity 0.3s,
+          transform 0.3s;
+        pointer-events: none;
+        white-space: nowrap;
+        z-index: 9999;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      @media (max-width: 600px) {
+        .admin-body {
+          padding: 24px 14px 80px;
+        }
+        .cat-settings {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .toggle-wrap {
+          margin-left: 0;
+        }
+        .admin-topbar {
+          padding: 14px 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- PASSWORD: change "xanduslounge" to anything you want -->
+    <div id="login-screen">
+      <div class="login-card">
+        <span class="login-icon">🍓</span>
+        <h1>Admin Panel</h1>
+        <p class="login-sub">Xandu's Lounge — only you can enter here</p>
+        <input
+          type="password"
+          id="pw-input"
+          placeholder="Enter your password"
+        />
+        <button class="btn-enter" onclick="checkPassword()">Enter</button>
+        <p class="login-error" id="login-error">Wrong password — try again!</p>
+      </div>
+    </div>
+
+    <div id="admin-panel">
+      <div class="admin-topbar">
+        <div class="topbar-title">🍓 <span>Xandu's Lounge</span> Admin</div>
+        <a href="index.html" class="btn-viewsite" target="_self">← View Site</a>
+      </div>
+
+      <div class="admin-body">
+        <div class="tab-row">
+          <button class="tab-btn active" onclick="switchTab(0)">
+            📢 Announcements
+          </button>
+          <button class="tab-btn" onclick="switchTab(1)">
+            🍓 Strawberry Posts
+          </button>
+          <button class="tab-btn" onclick="switchTab(2)">
+            🌟 Member Highlights
+          </button>
+          <button class="tab-btn" onclick="switchTab(3)">🖼️ Gallery</button>
+          <button class="tab-btn" onclick="switchTab(4)">🚀 Projects</button>
+        </div>
+
+        <!-- CATEGORY PANELS 0-2 -->
+        <div class="cat-panel active" id="panel-0">
+          <div class="cat-settings">
+            <div class="settings-group">
+              <span class="settings-label">Emoji</span>
+              <input
+                type="text"
+                class="icon-input"
+                id="icon-0"
+                value="📢"
+                maxlength="4"
+              />
+            </div>
+            <div class="settings-group">
+              <span class="settings-label">Category title on site</span>
+              <input
+                type="text"
+                class="title-input"
+                id="cat-title-0"
+                value="Announcements"
+              />
+            </div>
+            <div class="toggle-wrap">
+              Show on site
+              <label class="toggle">
+                <input type="checkbox" id="vis-0" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <button class="btn-save-settings" onclick="saveSettings(0)">
+              Save settings
+            </button>
+          </div>
+          <button class="new-post-btn" onclick="openForm(0)">
+            <span class="plus">＋</span> Write a new announcement
+          </button>
+          <div class="post-form" id="form-0">
+            <div class="form-title">✏️ New Announcement</div>
+            <input type="hidden" id="edit-id-0" value="" />
+            <div class="form-field">
+              <label>Post title</label
+              ><input
+                type="text"
+                id="f-title-0"
+                placeholder="e.g. Server event this weekend!"
+              />
+            </div>
+            <div class="form-field">
+              <label>Post content</label
+              ><textarea
+                id="f-body-0"
+                placeholder="Write your full announcement here!"
+              ></textarea>
+            </div>
+            <div class="form-field">
+              <label>Date</label><input type="date" id="f-date-0" />
+            </div>
+            <div class="form-field">
+              <label
+                >Discord link
+                <span
+                  style="
+                    font-weight: 400;
+                    text-transform: none;
+                    letter-spacing: 0;
+                  "
+                  >(optional)</span
+                ></label
+              >
+              <input
+                type="url"
+                id="f-discord-0"
+                placeholder="https://discord.com/channels/..."
+                oninput="toggleDiscordExtra(0)"
+              />
+              <p class="hint">
+                Only fill this if you want a button that links to a Discord
+                channel
+              </p>
+            </div>
+            <div class="discord-extra" id="discord-extra-0">
+              <div class="form-field">
+                <label>Button label</label
+                ><input
+                  type="text"
+                  id="f-btn-0"
+                  placeholder="Go to Announcements"
+                  value="Go to Announcements"
+                />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn-post-save" onclick="savePost(0)">
+                💾 Save post
+              </button>
+              <button class="btn-post-cancel" onclick="closeForm(0)">
+                Cancel
+              </button>
+            </div>
+          </div>
+          <div class="posts-list" id="posts-list-0"></div>
+        </div>
+
+        <div class="cat-panel" id="panel-1">
+          <div class="cat-settings">
+            <div class="settings-group">
+              <span class="settings-label">Emoji</span>
+              <input
+                type="text"
+                class="icon-input"
+                id="icon-1"
+                value="🍓"
+                maxlength="4"
+              />
+            </div>
+            <div class="settings-group">
+              <span class="settings-label">Category title on site</span>
+              <input
+                type="text"
+                class="title-input"
+                id="cat-title-1"
+                value="Strawberry Posts"
+              />
+            </div>
+            <div class="toggle-wrap">
+              Show on site
+              <label class="toggle">
+                <input type="checkbox" id="vis-1" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <button class="btn-save-settings" onclick="saveSettings(1)">
+              Save settings
+            </button>
+          </div>
+          <button class="new-post-btn" onclick="openForm(1)">
+            <span class="plus">＋</span> Write a new strawberry post
+          </button>
+          <div class="post-form" id="form-1">
+            <div class="form-title">✏️ New Strawberry Post</div>
+            <input type="hidden" id="edit-id-1" value="" />
+            <div class="form-field">
+              <label>Post title</label
+              ><input
+                type="text"
+                id="f-title-1"
+                placeholder="e.g. Strawberry of the week: @username"
+              />
+            </div>
+            <div class="form-field">
+              <label>Post content</label
+              ><textarea
+                id="f-body-1"
+                placeholder="Write your post here!"
+              ></textarea>
+            </div>
+            <div class="form-field">
+              <label>Date</label><input type="date" id="f-date-1" />
+            </div>
+            <div class="form-field">
+              <label
+                >Discord link
+                <span
+                  style="
+                    font-weight: 400;
+                    text-transform: none;
+                    letter-spacing: 0;
+                  "
+                  >(optional)</span
+                ></label
+              >
+              <input
+                type="url"
+                id="f-discord-1"
+                placeholder="https://discord.com/channels/..."
+                oninput="toggleDiscordExtra(1)"
+              />
+            </div>
+            <div class="discord-extra" id="discord-extra-1">
+              <div class="form-field">
+                <label>Button label</label
+                ><input
+                  type="text"
+                  id="f-btn-1"
+                  placeholder="See the Post"
+                  value="See the Post"
+                />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn-post-save" onclick="savePost(1)">
+                💾 Save post
+              </button>
+              <button class="btn-post-cancel" onclick="closeForm(1)">
+                Cancel
+              </button>
+            </div>
+          </div>
+          <div class="posts-list" id="posts-list-1"></div>
+        </div>
+
+        <div class="cat-panel" id="panel-2">
+          <div class="cat-settings">
+            <div class="settings-group">
+              <span class="settings-label">Emoji</span>
+              <input
+                type="text"
+                class="icon-input"
+                id="icon-2"
+                value="🌟"
+                maxlength="4"
+              />
+            </div>
+            <div class="settings-group">
+              <span class="settings-label">Category title on site</span>
+              <input
+                type="text"
+                class="title-input"
+                id="cat-title-2"
+                value="Member Highlights"
+              />
+            </div>
+            <div class="toggle-wrap">
+              Show on site
+              <label class="toggle">
+                <input type="checkbox" id="vis-2" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <button class="btn-save-settings" onclick="saveSettings(2)">
+              Save settings
+            </button>
+          </div>
+          <button class="new-post-btn" onclick="openForm(2)">
+            <span class="plus">＋</span> Write a new member highlight
+          </button>
+          <div class="post-form" id="form-2">
+            <div class="form-title">✏️ New Member Highlight</div>
+            <input type="hidden" id="edit-id-2" value="" />
+            <div class="form-field">
+              <label>Post title</label
+              ><input
+                type="text"
+                id="f-title-2"
+                placeholder="e.g. Member of the month: @username"
+              />
+            </div>
+            <div class="form-field">
+              <label>Post content</label
+              ><textarea
+                id="f-body-2"
+                placeholder="Write about this member here!"
+              ></textarea>
+            </div>
+            <div class="form-field">
+              <label>Date</label><input type="date" id="f-date-2" />
+            </div>
+            <div class="form-field">
+              <label
+                >Discord link
+                <span
+                  style="
+                    font-weight: 400;
+                    text-transform: none;
+                    letter-spacing: 0;
+                  "
+                  >(optional)</span
+                ></label
+              >
+              <input
+                type="url"
+                id="f-discord-2"
+                placeholder="https://discord.com/channels/..."
+                oninput="toggleDiscordExtra(2)"
+              />
+            </div>
+            <div class="discord-extra" id="discord-extra-2">
+              <div class="form-field">
+                <label>Button label</label
+                ><input
+                  type="text"
+                  id="f-btn-2"
+                  placeholder="See the Highlight"
+                  value="See the Highlight"
+                />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn-post-save" onclick="savePost(2)">
+                💾 Save post
+              </button>
+              <button class="btn-post-cancel" onclick="closeForm(2)">
+                Cancel
+              </button>
+            </div>
+          </div>
+          <div class="posts-list" id="posts-list-2"></div>
+        </div>
+
+        <!-- GALLERY PANEL -->
+        <div class="cat-panel" id="panel-3">
+          <button class="new-post-btn" onclick="openGalleryForm()">
+            <span class="plus">＋</span> Add image or video
+          </button>
+          <div class="gallery-form" id="gallery-form">
+            <div class="form-title">🖼️ Add to Gallery</div>
+            <div class="drop-zone" id="g-drop-zone">
+              <input
+                type="file"
+                id="g-file"
+                accept="image/*,video/*"
+                multiple
+              />
+              <span class="drop-zone-icon">📁</span>
+              <div class="drop-zone-text">
+                Drag &amp; drop images or videos here
+              </div>
+              <div class="drop-zone-sub">
+                or click to browse your files — JPG, PNG, GIF, MP4, WebM, etc.
+              </div>
+            </div>
+            <div class="file-queue" id="g-file-queue"></div>
+            <div class="form-field">
+              <label
+                >Artist credit
+                <span
+                  style="
+                    font-weight: 400;
+                    text-transform: none;
+                    letter-spacing: 0;
+                  "
+                  >(optional — applies to all selected files)</span
+                ></label
+              >
+              <input
+                type="text"
+                id="g-credit"
+                placeholder="e.g. by @knnazkiren"
+              />
+            </div>
+            <div class="form-actions">
+              <button class="btn-post-save" onclick="saveGalleryItems()">
+                💾 Add to gallery
+              </button>
+              <button class="btn-post-cancel" onclick="closeGalleryForm()">
+                Cancel
+              </button>
+            </div>
+          </div>
+          <div class="gallery-admin-grid" id="gallery-admin-list"></div>
+        </div>
+
+        <!-- PROJECTS PANEL -->
+        <div class="cat-panel" id="panel-4">
+          <button class="new-post-btn" onclick="openProjectForm()">
+            <span class="plus">＋</span> Add a new project
+          </button>
+          <div class="project-form" id="project-form">
+            <div class="form-title">🚀 New Project</div>
+            <input type="hidden" id="proj-edit-id" value="" />
+            <div class="form-field">
+              <label>Project title</label>
+              <input
+                type="text"
+                id="proj-title"
+                placeholder="e.g. Community Art Book"
+              />
+            </div>
+            <div class="form-field">
+              <label
+                >Cover image
+                <span
+                  style="
+                    font-weight: 400;
+                    text-transform: none;
+                    letter-spacing: 0;
+                  "
+                  >(optional)</span
+                ></label
+              >
+              <div
+                id="proj-img-preview-wrap"
+                style="display: none; margin-bottom: 10px"
+              >
+                <div class="img-preview-wrap">
+                  <img
+                    id="proj-img-preview"
+                    src=""
+                    alt=""
+                    class="img-preview"
+                  />
+                  <button
+                    class="img-remove-btn"
+                    onclick="removeProjectImage()"
+                    title="Remove image"
+                  >
+                    ×
+                  </button>
+                </div>
+              </div>
+              <div class="img-upload-zone" id="proj-img-zone">
+                <input type="file" id="proj-img-file" accept="image/*" />
+                <span
+                  style="font-size: 28px; display: block; margin-bottom: 6px"
+                  >🖼️</span
+                >
+                <div
+                  style="
+                    font-size: 13px;
+                    font-weight: 700;
+                    color: var(--text-mid);
+                  "
+                >
+                  Click or drag to upload cover image
+                </div>
+              </div>
+            </div>
+            <div class="form-field">
+              <label>Emoji (shown when no image)</label>
+              <input
+                type="text"
+                style="width: 80px; text-align: center; font-size: 22px"
+                id="proj-emoji"
+                placeholder="🚀"
+                maxlength="4"
+                value="🚀"
+              />
+            </div>
+            <div class="form-field">
+              <label>Status</label>
+              <select id="proj-status">
+                <option value="Planning">Planning</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+                <option value="On Hold">On Hold</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Description</label>
+              <textarea
+                id="proj-desc"
+                placeholder="What's this project about?"
+              ></textarea>
+            </div>
+            <div class="form-field">
+              <label
+                >Tags
+                <span
+                  style="
+                    font-weight: 400;
+                    text-transform: none;
+                    letter-spacing: 0;
+                  "
+                  >(comma-separated)</span
+                ></label
+              >
+              <input
+                type="text"
+                id="proj-tags"
+                placeholder="e.g. Art, Collaboration, Members"
+              />
+            </div>
+            <div class="form-field">
+              <label
+                >Link
+                <span
+                  style="
+                    font-weight: 400;
+                    text-transform: none;
+                    letter-spacing: 0;
+                  "
+                  >(optional)</span
+                ></label
+              >
+              <input type="url" id="proj-link" placeholder="https://..." />
+            </div>
+            <div class="form-actions">
+              <button class="btn-post-save" onclick="saveProject()">
+                💾 Save project
+              </button>
+              <button class="btn-post-cancel" onclick="closeProjectForm()">
+                Cancel
+              </button>
+            </div>
+          </div>
+          <div class="projects-admin-grid" id="projects-admin-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast">✅ Saved!</div>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+    <script>
+      /* ---- SUPABASE ---- */
+      var SUPABASE_URL = "https://gdhjtefkcrpxkrdiykhn.supabase.co";
+      var SUPABASE_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkaGp0ZWZrY3JweGtyZGl5a2huIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMzMTY5MTIsImV4cCI6MjA5ODg5MjkxMn0.fy1BvtEDOEY_kbJI5o6ML6H_A-zJVKZPCkd5SEwlc9g";
+      var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      /* ---- PASSWORD — change "xanduslounge" to anything you want ---- */
+      var PASSWORD = "xanduslounge";
+
+      var DEFAULT_DATA = [
+        { icon: "📢", catTitle: "Announcements", visible: true, posts: [] },
+        { icon: "🍓", catTitle: "Strawberry Posts", visible: true, posts: [] },
+        { icon: "🌟", catTitle: "Member Highlights", visible: true, posts: [] },
+      ];
+      var data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+
+      /* ---- AUTH ---- */
+      function checkPassword() {
+        if (document.getElementById("pw-input").value === PASSWORD) {
+          document.getElementById("login-screen").style.display = "none";
+          document.getElementById("admin-panel").style.display = "block";
+          showToast("⏳ Loading data...");
+          loadData().then(function () {
+            renderAll();
+            loadGalleryAdminList();
+            loadProjectsAdminList();
+          });
+        } else {
+          document.getElementById("login-error").style.display = "block";
+          document.getElementById("pw-input").value = "";
+          document.getElementById("pw-input").focus();
+        }
+      }
+      document
+        .getElementById("pw-input")
+        .addEventListener("keydown", function (e) {
+          if (e.key === "Enter") checkPassword();
+        });
+
+      /* ---- DATA LOADING ---- */
+      async function loadData() {
+        // Load categories
+        var catsRes = await sb.from("categories").select("*").order("id");
+        if (catsRes.data) {
+          catsRes.data.forEach(function (cat) {
+            data[cat.id] = {
+              icon: cat.icon,
+              catTitle: cat.cat_title,
+              visible: cat.visible,
+              posts: [],
+            };
+            setVal("icon-" + cat.id, cat.icon);
+            setVal("cat-title-" + cat.id, cat.cat_title);
+            var cb = document.getElementById("vis-" + cat.id);
+            if (cb) cb.checked = cat.visible !== false;
+          });
+        }
+        // Load posts
+        var postsRes = await sb
+          .from("posts")
+          .select("*")
+          .order("date", { ascending: false });
+        if (postsRes.data) {
+          postsRes.data.forEach(function (p) {
+            var ci = p.cat_index;
+            if (ci >= 0 && ci <= 2) {
+              if (!data[ci])
+                data[ci] = JSON.parse(JSON.stringify(DEFAULT_DATA[ci]));
+              if (!data[ci].posts) data[ci].posts = [];
+              data[ci].posts.push({
+                id: p.id,
+                title: p.title,
+                body: p.body,
+                date: p.date,
+                discordLink: p.discord_link || "",
+                discordBtn: p.discord_btn || "",
+              });
+            }
+          });
+        }
+      }
+
+      /* ---- TABS ---- */
+      var activeTab = 0;
+      function switchTab(n) {
+        document.querySelectorAll(".tab-btn").forEach(function (b, i) {
+          b.classList.toggle("active", i === n);
+        });
+        document.querySelectorAll(".cat-panel").forEach(function (p, i) {
+          p.classList.toggle("active", i === n);
+        });
+        activeTab = n;
+      }
+
+      /* ---- CATEGORY SETTINGS ---- */
+      async function saveSettings(n) {
+        var icon = getVal("icon-" + n) || DEFAULT_DATA[n].icon;
+        var catTitle = getVal("cat-title-" + n) || DEFAULT_DATA[n].catTitle;
+        var visible = document.getElementById("vis-" + n).checked;
+        if (!data[n]) data[n] = {};
+        data[n].icon = icon;
+        data[n].catTitle = catTitle;
+        data[n].visible = visible;
+        var res = await sb
+          .from("categories")
+          .upsert({ id: n, icon: icon, cat_title: catTitle, visible: visible });
+        if (res.error) {
+          showToast("❌ Error saving settings!");
+          return;
+        }
+        renderRow(n);
+        showToast("✅ Category settings saved!");
+      }
+
+      /* ---- POST FORMS ---- */
+      function openForm(n) {
+        var form = document.getElementById("form-" + n);
+        form.classList.add("open");
+        setVal("edit-id-" + n, "");
+        setVal("f-title-" + n, "");
+        setVal("f-body-" + n, "");
+        setVal("f-date-" + n, todayStr());
+        setVal("f-discord-" + n, "");
+        setVal(
+          "f-btn-" + n,
+          n === 0
+            ? "Go to Announcements"
+            : n === 1
+              ? "See the Post"
+              : "See the Highlight",
+        );
+        document
+          .getElementById("discord-extra-" + n)
+          .classList.remove("visible");
+        form.querySelector(".form-title").textContent = "✏️ New Post";
+        form.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      function closeForm(n) {
+        document.getElementById("form-" + n).classList.remove("open");
+      }
+
+      function toggleDiscordExtra(n) {
+        var val = getVal("f-discord-" + n);
+        document
+          .getElementById("discord-extra-" + n)
+          .classList.toggle("visible", val.length > 0);
+      }
+
+      async function savePost(n) {
+        var title = getVal("f-title-" + n);
+        var body = getVal("f-body-" + n);
+        if (!title || !body) {
+          showToast("⚠️ Please fill in a title and content!");
+          return;
+        }
+
+        var editId = getVal("edit-id-" + n);
+        var postId = editId || uid();
+        var record = {
+          id: postId,
+          cat_index: n,
+          title: title,
+          body: body,
+          date: getVal("f-date-" + n) || todayStr(),
+          discord_link: getVal("f-discord-" + n),
+          discord_btn: getVal("f-btn-" + n) || "Go to Channel",
+        };
+
+        var res = await sb.from("posts").upsert(record);
+        if (res.error) {
+          showToast("❌ Error saving post: " + res.error.message);
+          return;
+        }
+
+        // Update local cache
+        var post = {
+          id: postId,
+          title: record.title,
+          body: record.body,
+          date: record.date,
+          discordLink: record.discord_link,
+          discordBtn: record.discord_btn,
+        };
+        if (!data[n])
+          data[n] = {
+            icon: DEFAULT_DATA[n].icon,
+            catTitle: DEFAULT_DATA[n].catTitle,
+            visible: true,
+            posts: [],
+          };
+        if (!data[n].posts) data[n].posts = [];
+        if (editId) {
+          data[n].posts = data[n].posts.map(function (p) {
+            return p.id === editId ? post : p;
+          });
+        } else {
+          data[n].posts.unshift(post);
+        }
+        closeForm(n);
+        renderRow(n);
+        showToast("✅ Post saved!");
+      }
+
+      function editPost(catIndex, postId) {
+        var post = (data[catIndex].posts || []).find(function (p) {
+          return p.id === postId;
+        });
+        if (!post) return;
+        openForm(catIndex);
+        setVal("edit-id-" + catIndex, post.id);
+        setVal("f-title-" + catIndex, post.title);
+        setVal("f-body-" + catIndex, post.body);
+        setVal("f-date-" + catIndex, post.date);
+        setVal("f-discord-" + catIndex, post.discordLink || "");
+        setVal("f-btn-" + catIndex, post.discordBtn || "Go to Channel");
+        if (post.discordLink)
+          document
+            .getElementById("discord-extra-" + catIndex)
+            .classList.add("visible");
+        document
+          .getElementById("form-" + catIndex)
+          .querySelector(".form-title").textContent = "✏️ Edit Post";
+      }
+
+      async function deletePost(catIndex, postId) {
+        if (!confirm("Delete this post? This cannot be undone.")) return;
+        var res = await sb.from("posts").delete().eq("id", postId);
+        if (res.error) {
+          showToast("❌ Error deleting post!");
+          return;
+        }
+        data[catIndex].posts = (data[catIndex].posts || []).filter(
+          function (p) {
+            return p.id !== postId;
+          },
+        );
+        renderRow(catIndex);
+        showToast("🗑️ Post deleted.");
+      }
+
+      function renderRow(n) {
+        var cat = data[n] || {};
+        var posts = (cat.posts || []).slice();
+        var listEl = document.getElementById("posts-list-" + n);
+        if (!listEl) return;
+        if (posts.length === 0) {
+          listEl.innerHTML =
+            '<div class="no-posts-msg"><span>' +
+            (cat.icon || "✨") +
+            "</span>No posts yet — hit the button above to write your first one!</div>";
+          return;
+        }
+        listEl.innerHTML = posts
+          .map(function (post) {
+            var discordLine = post.discordLink
+              ? '<div class="admin-post-discord">🔗 ' +
+                safe(post.discordBtn || "Go to Channel") +
+                "</div>"
+              : "";
+            return (
+              '<div class="admin-post-card">' +
+              '<div class="admin-post-body">' +
+              '<div class="admin-post-date">' +
+              formatDate(post.date) +
+              "</div>" +
+              '<div class="admin-post-title">' +
+              safe(post.title) +
+              "</div>" +
+              '<div class="admin-post-preview">' +
+              safe(post.body) +
+              "</div>" +
+              discordLine +
+              "</div>" +
+              '<div class="admin-post-actions">' +
+              '<button class="btn-edit"   onclick="editPost(' +
+              n +
+              ",'" +
+              post.id +
+              "')\">Edit</button>" +
+              '<button class="btn-delete" onclick="deletePost(' +
+              n +
+              ",'" +
+              post.id +
+              "')\">Delete</button>" +
+              "</div>" +
+              "</div>"
+            );
+          })
+          .join("");
+      }
+      function renderAll() {
+        for (var i = 0; i < 3; i++) renderRow(i);
+      }
+
+      /* ============================================================
+       GALLERY — Supabase Storage upload
+       ============================================================ */
+      var pendingFiles = [];
+
+      function openGalleryForm() {
+        pendingFiles = [];
+        setVal("g-credit", "");
+        document.getElementById("g-file-queue").innerHTML = "";
+        document.getElementById("gallery-form").classList.add("open");
+        document
+          .getElementById("gallery-form")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      function closeGalleryForm() {
+        document.getElementById("gallery-form").classList.remove("open");
+        pendingFiles = [];
+      }
+
+      var gFileInput = document.getElementById("g-file");
+      var gDropZone = document.getElementById("g-drop-zone");
+
+      gFileInput.addEventListener("change", function () {
+        addFiles(Array.from(this.files));
+        this.value = "";
+      });
+      gDropZone.addEventListener("dragover", function (e) {
+        e.preventDefault();
+        gDropZone.classList.add("drag-over");
+      });
+      gDropZone.addEventListener("dragleave", function () {
+        gDropZone.classList.remove("drag-over");
+      });
+      gDropZone.addEventListener("drop", function (e) {
+        e.preventDefault();
+        gDropZone.classList.remove("drag-over");
+        var files = Array.from(e.dataTransfer.files).filter(function (f) {
+          return f.type.match(/^image\/|^video\//);
+        });
+        addFiles(files);
+      });
+
+      function addFiles(files) {
+        files.forEach(function (file) {
+          if (!file.type.match(/^image\/|^video\//)) return;
+          var id = uid();
+          pendingFiles.push({ id: id, file: file });
+          renderFileQueueItem(id, file);
+        });
+      }
+
+      function renderFileQueueItem(id, file) {
+        var queue = document.getElementById("g-file-queue");
+        var item = document.createElement("div");
+        item.className = "file-queue-item";
+        item.id = "queue-item-" + id;
+        var preview = document.createElement("div");
+        preview.className = "file-queue-preview";
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          if (file.type.match(/^video\//)) {
+            var v = document.createElement("video");
+            v.src = e.target.result;
+            v.muted = true;
+            preview.appendChild(v);
+          } else {
+            var img = document.createElement("img");
+            img.src = e.target.result;
+            preview.appendChild(img);
+          }
+        };
+        reader.readAsDataURL(file);
+        var name = document.createElement("span");
+        name.className = "file-queue-name";
+        name.textContent = file.name;
+        var removeBtn = document.createElement("button");
+        removeBtn.className = "file-queue-remove";
+        removeBtn.textContent = "×";
+        removeBtn.onclick = function () {
+          pendingFiles = pendingFiles.filter(function (pf) {
+            return pf.id !== id;
+          });
+          item.remove();
+        };
+        item.appendChild(preview);
+        item.appendChild(name);
+        item.appendChild(removeBtn);
+        queue.appendChild(item);
+      }
+
+      async function saveGalleryItems() {
+        if (pendingFiles.length === 0) {
+          showToast("⚠️ Please select at least one image or video!");
+          return;
+        }
+        var credit = getVal("g-credit");
+        showToast("⏳ Uploading " + pendingFiles.length + " file(s)...");
+        var done = 0;
+        for (var i = 0; i < pendingFiles.length; i++) {
+          var pf = pendingFiles[i];
+          var ext = pf.file.name.split(".").pop();
+          var storagePath = pf.id + "." + ext;
+          var upRes = await sb.storage
+            .from("gallery")
+            .upload(storagePath, pf.file, { contentType: pf.file.type });
+          if (upRes.error) {
+            showToast("❌ Upload failed: " + upRes.error.message);
+            continue;
+          }
+          var urlRes = sb.storage.from("gallery").getPublicUrl(storagePath);
+          var publicUrl = urlRes.data.publicUrl;
+          var dbRes = await sb
+            .from("gallery_items")
+            .insert({
+              id: pf.id,
+              credit: credit,
+              mime_type: pf.file.type,
+              url: publicUrl,
+            });
+          if (!dbRes.error) done++;
+        }
+        closeGalleryForm();
+        await loadGalleryAdminList();
+        showToast("✅ Added " + done + " item(s) to the gallery!");
+      }
+
+      async function loadGalleryAdminList() {
+        var res = await sb
+          .from("gallery_items")
+          .select("*")
+          .order("created_at", { ascending: false });
+        var listEl = document.getElementById("gallery-admin-list");
+        if (!listEl) return;
+        if (!res.data || res.data.length === 0) {
+          listEl.innerHTML =
+            '<div class="no-posts-msg"><span>🖼️</span>No gallery items yet — add your first image or video above!</div>';
+          return;
+        }
+        listEl.innerHTML = "";
+        res.data.forEach(function (item) {
+          var isVid = item.mime_type && item.mime_type.indexOf("video") === 0;
+          var typeLabel = isVid ? "🎬 Video" : "🖼️ Image";
+          var previewEl = isVid
+            ? '<video src="' + safe(item.url) + '" muted></video>'
+            : '<img src="' + safe(item.url) + '" alt="" />';
+          var card = document.createElement("div");
+          card.className = "gallery-admin-card";
+          card.innerHTML =
+            '<div class="gallery-admin-preview">' +
+            previewEl +
+            "</div>" +
+            '<div class="gallery-admin-info">' +
+            '<div class="gallery-admin-credit">' +
+            safe(item.credit || "(no credit)") +
+            "</div>" +
+            '<div class="gallery-admin-type">' +
+            typeLabel +
+            "</div>" +
+            "</div>" +
+            '<div class="admin-post-actions">' +
+            '<button class="btn-delete" onclick="deleteGalleryItem(\'' +
+            item.id +
+            "')\">Remove</button>" +
+            "</div>";
+          listEl.appendChild(card);
+        });
+      }
+
+      async function deleteGalleryItem(id) {
+        if (!confirm("Remove this item from the gallery?")) return;
+        // Get URL to find storage path
+        var getRes = await sb
+          .from("gallery_items")
+          .select("url")
+          .eq("id", id)
+          .single();
+        if (getRes.data && getRes.data.url) {
+          var urlParts = getRes.data.url.split("/gallery/");
+          if (urlParts[1])
+            await sb.storage
+              .from("gallery")
+              .remove([urlParts[1].split("?")[0]]);
+        }
+        await sb.from("gallery_items").delete().eq("id", id);
+        await loadGalleryAdminList();
+        showToast("🗑️ Removed from gallery.");
+      }
+
+      /* ============================================================
+       PROJECTS — Supabase Storage for images
+       ============================================================ */
+      var projImageFile = null; // File object for new upload
+      var projExistingImageUrl = null; // URL of existing image when editing
+
+      var projImgFileInput = document.getElementById("proj-img-file");
+      var projImgZone = document.getElementById("proj-img-zone");
+
+      projImgFileInput.addEventListener("change", function () {
+        if (this.files[0]) readProjectImage(this.files[0]);
+      });
+      projImgZone.addEventListener("dragover", function (e) {
+        e.preventDefault();
+        projImgZone.style.borderColor = "var(--red-main)";
+      });
+      projImgZone.addEventListener("dragleave", function () {
+        projImgZone.style.borderColor = "";
+      });
+      projImgZone.addEventListener("drop", function (e) {
+        e.preventDefault();
+        projImgZone.style.borderColor = "";
+        var file = e.dataTransfer.files[0];
+        if (file && file.type.match(/^image\//)) readProjectImage(file);
+      });
+
+      function readProjectImage(file) {
+        projImageFile = file;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById("proj-img-preview").src = e.target.result;
+          document.getElementById("proj-img-preview-wrap").style.display =
+            "block";
+          document.getElementById("proj-img-zone").style.display = "none";
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function removeProjectImage() {
+        projImageFile = null;
+        projExistingImageUrl = null;
+        document.getElementById("proj-img-preview").src = "";
+        document.getElementById("proj-img-preview-wrap").style.display = "none";
+        document.getElementById("proj-img-zone").style.display = "block";
+        document.getElementById("proj-img-file").value = "";
+      }
+
+      function openProjectForm() {
+        projImageFile = null;
+        projExistingImageUrl = null;
+        removeProjectImage();
+        setVal("proj-edit-id", "");
+        setVal("proj-title", "");
+        setVal("proj-emoji", "🚀");
+        document.getElementById("proj-status").value = "Planning";
+        setVal("proj-desc", "");
+        setVal("proj-tags", "");
+        setVal("proj-link", "");
+        document.getElementById("project-form").classList.add("open");
+        document
+          .getElementById("project-form")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      function closeProjectForm() {
+        document.getElementById("project-form").classList.remove("open");
+        projImageFile = null;
+        projExistingImageUrl = null;
+      }
+
+      async function saveProject() {
+        var title = getVal("proj-title");
+        if (!title) {
+          showToast("⚠️ Please enter a project title!");
+          return;
+        }
+
+        var editId = getVal("proj-edit-id");
+        var projId = editId || uid();
+        var imageUrl = projExistingImageUrl;
+
+        if (projImageFile) {
+          showToast("⏳ Uploading image...");
+          var ext = projImageFile.name.split(".").pop();
+          var storagePath = projId + "." + ext;
+          var upRes = await sb.storage
+            .from("projects")
+            .upload(storagePath, projImageFile, {
+              contentType: projImageFile.type,
+              upsert: true,
+            });
+          if (upRes.error) {
+            showToast("❌ Image upload failed: " + upRes.error.message);
+          } else {
+            imageUrl = sb.storage.from("projects").getPublicUrl(storagePath)
+              .data.publicUrl;
+          }
+        }
+
+        var record = {
+          id: projId,
+          title: title,
+          emoji: getVal("proj-emoji") || "🚀",
+          status: document.getElementById("proj-status").value,
+          description: getVal("proj-desc"),
+          tags: getVal("proj-tags"),
+          link: getVal("proj-link"),
+          image_url: imageUrl || null,
+        };
+
+        var res = await sb.from("projects").upsert(record);
+        if (res.error) {
+          showToast("❌ Error saving project: " + res.error.message);
+          return;
+        }
+
+        closeProjectForm();
+        await loadProjectsAdminList();
+        showToast("✅ Project saved!");
+      }
+
+      async function loadProjectsAdminList() {
+        var res = await sb
+          .from("projects")
+          .select("*")
+          .order("created_at", { ascending: false });
+        var listEl = document.getElementById("projects-admin-list");
+        if (!listEl) return;
+        if (!res.data || res.data.length === 0) {
+          listEl.innerHTML =
+            '<div class="no-posts-msg"><span>🚀</span>No projects yet — hit the button above to add your first one!</div>';
+          return;
+        }
+        var statusClassMap = {
+          Planning: "status-planning",
+          "In Progress": "status-inprogress",
+          Completed: "status-completed",
+          "On Hold": "status-onhold",
+        };
+        listEl.innerHTML = "";
+        res.data.forEach(function (proj) {
+          var thumbHtml = proj.image_url
+            ? '<img src="' + safe(proj.image_url) + '" alt="" />'
+            : proj.emoji || "🚀";
+          var sc = statusClassMap[proj.status] || "status-planning";
+          var card = document.createElement("div");
+          card.className = "admin-project-card";
+          card.innerHTML =
+            '<div class="admin-project-thumb">' +
+            thumbHtml +
+            "</div>" +
+            '<div class="admin-project-info">' +
+            '<div class="admin-project-title">' +
+            safe(proj.title) +
+            "</div>" +
+            '<div class="admin-project-meta"><span class="status-badge ' +
+            sc +
+            '">' +
+            safe(proj.status || "Planning") +
+            "</span>" +
+            (proj.tags ? " &nbsp;· " + safe(proj.tags) : "") +
+            "</div>" +
+            "</div>" +
+            '<div class="admin-post-actions">' +
+            '<button class="btn-edit"   onclick="editProject(\'' +
+            proj.id +
+            "')\">Edit</button>" +
+            '<button class="btn-delete" onclick="deleteProject(\'' +
+            proj.id +
+            "')\">Delete</button>" +
+            "</div>";
+          listEl.appendChild(card);
+        });
+      }
+
+      async function editProject(projId) {
+        var res = await sb
+          .from("projects")
+          .select("*")
+          .eq("id", projId)
+          .single();
+        if (res.error || !res.data) return;
+        var proj = res.data;
+        openProjectForm();
+        setVal("proj-edit-id", proj.id);
+        setVal("proj-title", proj.title);
+        setVal("proj-emoji", proj.emoji || "🚀");
+        document.getElementById("proj-status").value =
+          proj.status || "Planning";
+        setVal("proj-desc", proj.description || "");
+        setVal("proj-tags", proj.tags || "");
+        setVal("proj-link", proj.link || "");
+        if (proj.image_url) {
+          projExistingImageUrl = proj.image_url;
+          document.getElementById("proj-img-preview").src = proj.image_url;
+          document.getElementById("proj-img-preview-wrap").style.display =
+            "block";
+          document.getElementById("proj-img-zone").style.display = "none";
+        }
+      }
+
+      async function deleteProject(projId) {
+        if (!confirm("Delete this project? This cannot be undone.")) return;
+        // Remove image from storage if any
+        var res = await sb
+          .from("projects")
+          .select("image_url")
+          .eq("id", projId)
+          .single();
+        if (res.data && res.data.image_url) {
+          var urlParts = res.data.image_url.split("/projects/");
+          if (urlParts[1])
+            await sb.storage
+              .from("projects")
+              .remove([urlParts[1].split("?")[0]]);
+        }
+        await sb.from("projects").delete().eq("id", projId);
+        await loadProjectsAdminList();
+        showToast("🗑️ Project deleted.");
+      }
+
+      /* ---- HELPERS ---- */
+      function getVal(id) {
+        var el = document.getElementById(id);
+        return el ? el.value.trim() : "";
+      }
+      function setVal(id, val) {
+        var el = document.getElementById(id);
+        if (el) el.value = val;
+      }
+      function uid() {
+        return crypto.randomUUID();
+      }
+      function todayStr() {
+        return new Date().toISOString().slice(0, 10);
+      }
+      function formatDate(s) {
+        if (!s) return "";
+        try {
+          return new Date(s + "T12:00:00").toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        } catch (e) {
+          return s;
+        }
+      }
+      function safe(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+      var toastTimer;
+      function showToast(msg) {
+        var t = document.getElementById("toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          t.classList.remove("show");
+        }, 2800);
+      }
+    </script>
+  </body>
+</html>
